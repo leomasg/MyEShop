@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace MyEShop.Core.Models
 {
-    public class ProductCategory
+    public class ProductCategory : BaseEntity
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
+
         [StringLength(20)]
         [DisplayName("Product Category Name")]
         public string Category { get; set; }
 
-        public ProductCategory()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        //public ProductCategory()
+        //{
+        //    this.Id = Guid.NewGuid().ToString();
+        //}
 
     }
 }
