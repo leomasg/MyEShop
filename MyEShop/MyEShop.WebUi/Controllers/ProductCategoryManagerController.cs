@@ -5,18 +5,22 @@ using System.Web;
 using System.Web.Mvc;
 using MyEShop.DataAccess.InMemory;
 using MyEShop.Core.Models;
+using MyEShop.Core.Contracts;
 
 namespace MyEShop.WebUi.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
         //ProductCategoryRepository context;
-        InMemoryRepository<ProductCategory> context;
+        //InMemoryRepository<ProductCategory> context;
+        IRepository<ProductCategory> context;
 
-        public ProductCategoryManagerController()
+        //public ProductCategoryManagerController()
+        public ProductCategoryManagerController(IRepository<ProductCategory> productCategoryContext)
         {
             //this.context = new ProductCategoryRepository();
-            this.context = new InMemoryRepository<ProductCategory>();
+            //this.context = new InMemoryRepository<ProductCategory>();
+            this.context = productCategoryContext;
         }
 
         // GET: ProductManager
