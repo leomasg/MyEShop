@@ -5,17 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using MyEShop.Core.Models;
 using MyEShop.DataAccess.InMemory;
-
+using MyEShop.Core.ViewModels;
 
 namespace MyEShop.WebUi.Controllers
 {
     public class ProductManagerController : Controller
     {
         ProductRepository context;
+        ProductCategoryRepository productCategories;
 
         public ProductManagerController()
         {
             this.context = new ProductRepository();
+            this.productCategories = new ProductCategoryRepository();
         }
 
         // GET: ProductManager
@@ -27,11 +29,18 @@ namespace MyEShop.WebUi.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+            viewModel.Product = new Product();
+            viewModel.ProductCategories = productCategories.Collection();
+
+            return View(viewModel);
+
+            //Product product = new Product();
+            //return View(product);
         }
         [HttpPost]
-        public ActionResult Create(Product p)
+        //public ActionResult Create(Product p)
+        public ActionResult Create(ProductManagerViewModel p)
         {
             if (!ModelState.IsValid)
             {
@@ -39,7 +48,8 @@ namespace MyEShop.WebUi.Controllers
             }
             else 
             {
-                context.Insert(p);
+                //context.Insert(p);
+                context.Insert(p.Product);
                 context.Comit();
                 return RedirectToAction("Index");
             }
@@ -55,11 +65,18 @@ namespace MyEShop.WebUi.Controllers
             }
             else
             {
-                return View(product);
+                //return View(product);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                viewModel.Product = product;
+                viewModel.ProductCategories = productCategories.Collection();
+
+                return View(viewModel);
+
             }
         }
         [HttpPost]
-        public ActionResult Edit(Product p , string Id)
+        //public ActionResult Edit(Product p , string Id)
+        public ActionResult Edit(ProductManagerViewModel p, string Id)
         {
             Product productToEdit = context.Find(Id);
 
@@ -73,10 +90,15 @@ namespace MyEShop.WebUi.Controllers
                 {
                     return View(p);
                 }
-                productToEdit.Category = p.Category;
-                productToEdit.description = p.description;
-                productToEdit.Name = p.Name;
-                productToEdit.Price = p.Price;
+                //productToEdit.Category = p.Category;
+                //productToEdit.description = p.description;
+                //productToEdit.Name = p.Name;
+                //productToEdit.Price = p.Price;
+
+                productToEdit.Category = p.Product.Category;
+                productToEdit.description = p.Product.description;
+                productToEdit.Name = p.Product.Name;
+                productToEdit.Price = p.Product.Price;
 
                 context.Comit();
                 return RedirectToAction("Index");
