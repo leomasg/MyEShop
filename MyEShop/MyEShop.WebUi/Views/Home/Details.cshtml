@@ -1,0 +1,37 @@
+﻿@model MyEShop.Core.Models.Product
+
+@{
+    ViewBag.Title = Model.Name + " Detailsl";
+}
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <img class="img-responsive" src="~/Content/ProductImages/@Model.Image" />
+    </div>
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+
+            <dt>
+                R$ @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt></dt>
+            <dd><a href="#" class="btn btn-success">Add to Basket</a></dd>
+            <dt></dt>
+            <dd>@Html.ActionLink("Back to List", "Index")</a></dd>
+        </dl>
+    </div>
+</div>
+<div class="col-md-12 clearfix"></div>"
