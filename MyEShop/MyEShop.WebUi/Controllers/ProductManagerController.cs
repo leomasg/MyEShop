@@ -7,6 +7,7 @@ using MyEShop.Core.Models;
 using MyEShop.DataAccess.InMemory;
 using MyEShop.Core.ViewModels;
 using MyEShop.Core.Contracts;
+using System.IO;
 
 namespace MyEShop.WebUi.Controllers
 {
@@ -55,7 +56,7 @@ namespace MyEShop.WebUi.Controllers
         }
         [HttpPost]
         //public ActionResult Create(Product p)
-        public ActionResult Create(ProductManagerViewModel p)
+        public ActionResult Create(ProductManagerViewModel p,HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
             {
@@ -63,6 +64,11 @@ namespace MyEShop.WebUi.Controllers
             }
             else 
             {
+                if (file != null)
+                {
+                    p.Product.Image = p.Product.Id + Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath("//Content//ProductImages//") + p.Product.Image);
+                }
                 //context.Insert(p);
                 context.Insert(p.Product);
                 context.Comit();
@@ -91,7 +97,7 @@ namespace MyEShop.WebUi.Controllers
         }
         [HttpPost]
         //public ActionResult Edit(Product p , string Id)
-        public ActionResult Edit(ProductManagerViewModel p, string Id)
+        public ActionResult Edit(ProductManagerViewModel p, string Id, HttpPostedFileBase file)
         {
             Product productToEdit = context.Find(Id);
 
@@ -104,6 +110,11 @@ namespace MyEShop.WebUi.Controllers
                 if(!ModelState.IsValid)
                 {
                     return View(p);
+                }
+                if (file != null)
+                {
+                    productToEdit.Image = p.Product.Id + Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath("//Content//ProductImages//") + productToEdit.Image);
                 }
                 //productToEdit.Category = p.Category;
                 //productToEdit.description = p.description;
@@ -147,6 +158,7 @@ namespace MyEShop.WebUi.Controllers
             else
             {
                 context.Delete(Id);
+                context.Comit();
                 return RedirectToAction("Index");
             }
         }

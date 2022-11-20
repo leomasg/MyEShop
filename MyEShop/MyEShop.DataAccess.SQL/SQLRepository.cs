@@ -42,7 +42,6 @@ namespace MyEShop.DataAccess.SQL
                     dbSet.Attach(p);
                 }
                 dbSet.Remove(p);
-                Comit();
             }
             else
             {
@@ -58,14 +57,12 @@ namespace MyEShop.DataAccess.SQL
         public void Insert(T p)
         {
             dbSet.Add(p);
-            Comit();
         }
 
         public void Update(T p)
         {
             dbSet.Attach(p);
             context.Entry(p).State = EntityState.Modified;
-            Comit();
         }
     }
 }
