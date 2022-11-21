@@ -89,8 +89,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BasketControllerTests.cs" />
+    <Compile Include="Mocks\MockContext.cs" />
+    <Compile Include="Mocks\MockHttpContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Controllers\HomeControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -99,11 +102,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyEShop.Services\MyEShop.Services.csproj">
+      <Project>{E3569616-3B81-4F36-8E3C-7753DBC5C42F}</Project>
+      <Name>MyEShop.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyEShop.WebUi\MyEShop.WebUi.csproj">
       <Project>{259C88DC-00FB-4CB8-87C1-E01559922737}</Project>
       <Name>MyEShop.WebUi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyEShopy.Core\MyEShop.Core.csproj">
+      <Project>{B585B9FB-10BF-4BCE-8E1B-766C2BAB9321}</Project>
+      <Name>MyEShop.Core</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
