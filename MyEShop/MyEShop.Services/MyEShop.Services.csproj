@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,7 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasketService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyEShop.DataAccess.SQL\MyEShop.DataAccess.SQL.csproj">
+      <Project>{c857b6d5-e9aa-45e5-961a-ece917e78a30}</Project>
+      <Name>MyEShop.DataAccess.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyEShopy.Core\MyEShop.Core.csproj">
+      <Project>{b585b9fb-10bf-4bce-8e1b-766c2bab9321}</Project>
+      <Name>MyEShop.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
