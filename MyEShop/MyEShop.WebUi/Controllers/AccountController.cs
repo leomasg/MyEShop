@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MyEShop.Core.Contracts;
+using MyEShop.Core.Models;
 using MyEShop.WebUi.Models;
 
 namespace MyEShop.WebUi.Controllers
@@ -17,15 +19,23 @@ namespace MyEShop.WebUi.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IRepository<Customer> customerRepository;
 
-        public AccountController()
-        {
-        }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        //CONFIGURADO NO APP_Start/Startup.Auth atravez do HttpContext.GetOwinContext()
+        //public AccountController()
+        //{
+        //}
+
+        //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager , IRepository<Customer> customerRepository)
+        //{
+        //    UserManager = userManager;
+        //    SignInManager = signInManager;
+        //    this.customerRepository = customerRepository;
+        //}
+        public AccountController(IRepository<Customer> customerRepository)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            this.customerRepository = customerRepository;
         }
 
         public ApplicationSignInManager SignInManager
@@ -155,6 +165,22 @@ namespace MyEShop.WebUi.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //Register customer model
+                    Customer custumer = new Customer()
+                    {
+                        City = model.City,
+                        Email = model.Email,
+                        FirtName = model.FirtName,
+                        LastName = model.LastName,
+                        State = model.State,
+                        Street = model.Street,
+                        ZipCode = model.ZipCode,
+                        UserId = user.Id
+                    };
+
+                    customerRepository.Insert(custumer);
+                    customerRepository.Comit();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Para obter mais informações sobre como habilitar a confirmação da conta e redefinição de senha, visite https://go.microsoft.com/fwlink/?LinkID=320771
