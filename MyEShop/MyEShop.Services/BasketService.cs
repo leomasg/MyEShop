@@ -154,5 +154,12 @@ namespace MyEShop.Services
 
             basketContext.Comit();
         }
+
+        public void ClearBasket(HttpContextBase httpContext)
+        {
+            Basket basket = GetBasket(httpContext, false);
+            basket.BasketItems.Clear();
+            basketContext.Comit();
+        }
     }
 }
