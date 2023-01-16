@@ -9,6 +9,7 @@ using MyEShop.Core.Contracts;
 
 namespace MyEShop.WebUi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductCategoryManagerController : Controller
     {
         //ProductCategoryRepository context;
